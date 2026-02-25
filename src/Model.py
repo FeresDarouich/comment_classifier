@@ -6,7 +6,7 @@
 # Outputs:
 #   logits: [B, num_classes]
 
-from __future__ import annoatations
+from __future__ import annotations
 
 import math
 from dataclasses import dataclass
