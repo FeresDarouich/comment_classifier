@@ -41,7 +41,3 @@ Where:
 
 - `logits` → `[B, num_classes]`
 
----
-Overfit a small batch first to verify training works.
-
-Ensure tokenizer and model max_len are consistent.
