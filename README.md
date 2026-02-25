@@ -1,25 +1,50 @@
-Tiny Transformer Comment Classifier (CPU-Friendly)
+# Tiny Transformer Comment Classifier (CPU-Friendly)
 
-A lightweight Transformer-based text classification system designed to run efficiently on CPU.
+A lightweight Transformer-based text classification system built from scratch using PyTorch. Designed to be simple, efficient, and runnable entirely on CPU without pretrained dependencies.
 
-This project provides:
+---
 
-Custom word-level tokenizer
+## Overview
 
-Tiny Transformer encoder model
+This project implements:
 
-Training pipeline
+- A custom word-level tokenizer  
+- A Tiny Transformer encoder classifier  
+- A full training pipeline  
+- A prediction (inference) script  
+- Checkpoint + tokenizer saving for reproducibility  
 
-Inference (prediction) script
+The classifier takes raw text comments and predicts their class (e.g., toxic vs non-toxic, positive vs negative, spam vs not spam).
 
-Model + tokenizer checkpoint saving
+---
 
-Overview
+## Architecture
 
-This classifier takes raw text comments and predicts their class (e.g., toxic / non-toxic, positive / negative, etc.).
+The model consists of:
 
-It is built from scratch using PyTorch and does not rely on pretrained models.
-The architecture is intentionally small to remain CPU-efficient.
+1. Word Embedding Layer  
+2. Learned Positional Embeddings  
+3. Stacked Transformer Encoder Blocks  
+4. CLS Token Pooling  
+5. Linear Classification Head  
+
+### Input
+
+- `input_ids` → `[B, T]`
+- `attention_mask` → `[B, T]`
+
+Where:
+- `B` = batch size  
+- `T` = max sequence length  
+
+### Output
+
+- `logits` → `[B, num_classes]`
+
+---
+
+## Project Structure
+
 
 Project Structure
 .
