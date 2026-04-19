@@ -24,6 +24,7 @@ class CommentPredictor:
             device: str = "cpu",
     ):
         self.device = torch.device(device)
+        self.label_names = label_names
         # load tokenizer
         self.tok = WordTokenizer.load(tokenizer_path)
         # load checkpoints
@@ -48,7 +49,7 @@ class CommentPredictor:
         # Optional human-readable labels
         if self.label_names is not None and len(self.label_names) != ckpt["num_classes"]:
             raise ValueError(
-                f"label_names length ({len(self.label_names)}) must equal num classes ({ckpt["num_classes"]})"
+                f"label_names length ({len(self.label_names)}) must equal num classes ({ckpt['num_classes']})"
             )
         # Safety: ensure tokenizer max_len matches model max_len
         if self.tok.max_len != ckpt["max_len"]:
@@ -56,6 +57,7 @@ class CommentPredictor:
                 f"Tokenizer max_len ({self.tok.max_len}) != checkpoint max_len ({ckpt['max_len']}). "
                 "Fix by training and saving consistent max_len."
             )
+
     @torch.no_grad()
     def predict_one(self, text: str) -> Prediction:
         ids= self.tok.encode(text)
@@ -116,16 +118,39 @@ class CommentPredictor:
 def main():
     import argparse
 
+    def parse_label_names(raw: str) -> List[str]:
+        s = (raw or "").strip()
+        if not s:
+            return []
+        # Preferred: JSON list, e.g. ["ok","toxic"]
+        try:
+            parsed = json.loads(s)
+            if isinstance(parsed, list) and all(isinstance(x, str) for x in parsed):
+                return parsed
+        except json.JSONDecodeError:
+            pass
+
+        # Fallback: comma-separated (optionally wrapped in brackets), e.g. ok,toxic or [ok,toxic]
+        if s.startswith("[") and s.endswith("]"):
+            s = s[1:-1].strip()
+        parts = [p.strip().strip('"').strip("'") for p in s.split(",")]
+        return [p for p in parts if p]
+
     p = argparse.ArgumentParser()
     p.add_argument("--model", type = str, required = True, help = "Path to best.pt")
     p.add_argument("--tokenizer", type=str, required=True, help = "Path to tokenizer.json")
     p.add_argument("--text", type=str, default=None,help="Single text to classify")
-    p.add_argument("--labels", type=str, default=None, help="Json List e.g. \'['ok','toxic']\'")
+    p.add_argument(
+        "--labels",
+        type=str,
+        default=None,
+        help="Label names as JSON list (e.g. [\"ok\",\"toxic\"]) or comma-separated (e.g. ok,toxic)",
+    )
     args = p.parse_args()
 
     label_names = None
     if args.labels:
-        label_names = json.loads(args.labels)
+        label_names = parse_label_names(args.labels)
     pred = CommentPredictor(
         model_path=args.model,
         tokenizer_path=args.tokenizer,

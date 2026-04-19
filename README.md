@@ -41,3 +41,80 @@ Where:
 
 - `logits` → `[B, num_classes]`
 
+---
+
+## Setup
+
+Create a virtual environment and install dependencies:
+
+```bash
+python -m venv .venv
+# Windows (PowerShell)
+.\.venv\Scripts\Activate.ps1
+
+pip install -r requirements.txt
+```
+
+---
+
+## Sample data
+
+A small sample dataset is included at:
+
+- `data/sample_comments_ok_toxic.csv`
+
+It is a UTF-8 CSV with this header:
+
+- `text,label`
+
+Label mapping used in that file:
+
+- `0` → non-toxic / ok
+- `1` → toxic / abusive
+
+---
+
+## Train
+
+Train the model from a CSV file:
+
+```bash
+python src/Trainer.py --data_csv data/sample_comments_ok_toxic.csv --num_classes 2
+```
+
+Outputs are saved to `runs/comment_cls/` by default:
+
+- `best.pt` (best checkpoint by macro-F1)
+- `tokenizer.json` (vocab + tokenizer settings)
+- `train_config.json` (the CLI arguments used)
+
+Common useful flags:
+
+- `--epochs 8` (default)
+- `--max_len 64` (default)
+- `--class_weighting` (enables inverse-frequency weighting)
+
+---
+
+## Predict
+
+After training, run inference on a single comment:
+
+```bash
+python src/Predict.py --model runs/comment_cls/best.pt --tokenizer runs/comment_cls/tokenizer.json --text "this is amazing, thanks!" --labels ok,toxic
+```
+
+If you omit `--labels`, the output includes `label_id` only. `--labels` also accepts a JSON list (e.g. `["ok","toxic"]`).
+
+---
+
+## Your own dataset format
+
+`src/Trainer.py` expects a UTF-8 CSV with:
+
+- Header columns: `text,label`
+- `text`: the raw comment string
+- `label`: an integer in `[0, num_classes-1]`
+
+Note: the trainer currently requires at least ~10 rows.
+
