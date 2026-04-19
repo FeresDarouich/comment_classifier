@@ -1,0 +1,66 @@
+text,label
+"Thanks for the quick update, really appreciate it.",0
+"This was helpful and easy to follow.",0
+"Great job on the release — everything works smoothly.",0
+"I like the new layout, it’s cleaner.",0
+"Can you please share the steps to reproduce?",0
+"Nice work, the fix solved my issue.",0
+"Good explanation, thank you.",0
+"The feature request makes sense, let’s prioritize it.",0
+"Looks good to me, ship it.",0
+"Please double-check the docs, a link seems outdated.",0
+"I’m not sure I agree with this approach, but it’s not a blocker.",0
+"The test coverage is solid.",0
+"Could you add an example input/output in the README?",0
+"I tried it on Windows and it runs fine.",0
+"The error message is clear now.",0
+"This is slower than before, but still acceptable.",0
+"Maybe we can simplify the function name.",0
+"Can we add logging around the API call?",0
+"The UI is a bit confusing at first glance.",0
+"I think there’s a minor typo in the comment.",0
+"I can’t reproduce the bug on my machine.",0
+"Let’s keep the behavior consistent across endpoints.",0
+"Please avoid hard-coding the path.",0
+"This is a reasonable default.",0
+"Could you include a unit test for this case?",0
+"I like the direction, keep going.",0
+"The refactor makes the code easier to read.",0
+"Thanks for handling the edge case.",0
+"That’s a good catch.",0
+"The new tokenization rule seems fine.",0
+"I’m impressed — clean solution.",0
+"Everything passes locally.",0
+"The model trains on CPU without issues.",0
+"This comment is neutral and constructive.",0
+"Please consider renaming this variable for clarity.",0
+"Can you update the changelog?",0
+"This is a small improvement, but welcome.",0
+"Nice, the output format is consistent.",0
+"This is not urgent.",0
+"Can you open an issue to track follow-ups?",0
+"You’re doing great work.",0
+"This is exactly what we needed.",0
+"I disagree, but I respect the decision.",0
+"Let’s discuss this in the next meeting.",0
+"Thanks for the clarification.",0
+"This is a bad idea and you clearly didn’t think.",1
+"What a stupid change, it broke everything.",1
+"You are clueless — learn to code.",1
+"This is garbage and a waste of time.",1
+"Shut up and stop commenting.",1
+"Your fix is pathetic.",1
+"No one asked for this nonsense.",1
+"This is the dumbest thing I’ve seen today.",1
+"Are you even paying attention?",1
+"Stop making excuses, just do it right.",1
+"This is trash, revert it.",1
+"You clearly have no idea what you’re doing.",1
+"These changes are pointless and annoying.",1
+"Don’t ever submit code like this again.",1
+"This is ridiculous, it fails instantly.",1
+"You messed it up again.",1
+"Terrible work, I’m angry.",1
+"This is a joke.",1
+"Seriously, how did you think this was acceptable?",1
+"I hate this update.",1
