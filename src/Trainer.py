@@ -245,6 +245,9 @@ def build_argparser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser()
     p.add_argument("--data_csv", type=str, required=True,help="CSV with columns text,label")
     p.add_argument("--out_dir", type=str,default="runs/comment_cls")
+
+    # Data / labels
+    p.add_argument("--num_classes", type=int, default=2, help="Number of label classes (labels must be 0..num_classes-1)")
     # Tokenizer
     p.add_argument("--vocab_size", type=int, default=10000)
     p.add_argument("--max_len", type=int, default=64)
