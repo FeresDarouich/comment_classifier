@@ -45,6 +45,16 @@ Where:
 
 ## Setup
 
+### Option A (recommended): Poetry
+
+Install dependencies using Poetry:
+
+```bash
+poetry install --no-root
+```
+
+### Option B: pip + venv
+
 Create a virtual environment and install dependencies:
 
 ```bash
@@ -54,6 +64,24 @@ python -m venv .venv
 
 pip install -r requirements.txt
 ```
+
+---
+
+## Makefile shortcuts
+
+If you have `make` available (Git Bash / WSL on Windows, or any Unix-like shell), you can use:
+
+```bash
+make install
+make train
+make predict TEXT="thanks for the help" LABELS=ok,toxic
+```
+
+Defaults:
+
+- `DATA=data/sample_comments_ok_toxic.csv`
+- `OUT=runs/comment_cls`
+- `NUM_CLASSES=2`
 
 ---
 
