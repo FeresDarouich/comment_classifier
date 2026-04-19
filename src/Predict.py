@@ -8,6 +8,30 @@ import torch.nn.functional as F
 from Tockenizer import WordTokenizer
 from Model import build_model
 
+
+def parse_label_names(raw: str) -> List[str]:
+    """Parse label names from CLI input.
+
+    Accepts either:
+    - JSON list: ["ok","toxic"]
+    - Comma-separated: ok,toxic (optionally wrapped in brackets)
+    """
+    s = (raw or "").strip()
+    if not s:
+        return []
+
+    try:
+        parsed = json.loads(s)
+        if isinstance(parsed, list) and all(isinstance(x, str) for x in parsed):
+            return parsed
+    except json.JSONDecodeError:
+        pass
+
+    if s.startswith("[") and s.endswith("]"):
+        s = s[1:-1].strip()
+    parts = [p.strip().strip('"').strip("'") for p in s.split(",")]
+    return [p for p in parts if p]
+
 @dataclass
 class Prediction:
     label_id: int
@@ -117,24 +141,6 @@ class CommentPredictor:
 
 def main():
     import argparse
-
-    def parse_label_names(raw: str) -> List[str]:
-        s = (raw or "").strip()
-        if not s:
-            return []
-        # Preferred: JSON list, e.g. ["ok","toxic"]
-        try:
-            parsed = json.loads(s)
-            if isinstance(parsed, list) and all(isinstance(x, str) for x in parsed):
-                return parsed
-        except json.JSONDecodeError:
-            pass
-
-        # Fallback: comma-separated (optionally wrapped in brackets), e.g. ok,toxic or [ok,toxic]
-        if s.startswith("[") and s.endswith("]"):
-            s = s[1:-1].strip()
-        parts = [p.strip().strip('"').strip("'") for p in s.split(",")]
-        return [p for p in parts if p]
 
     p = argparse.ArgumentParser()
     p.add_argument("--model", type = str, required = True, help = "Path to best.pt")

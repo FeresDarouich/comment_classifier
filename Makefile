@@ -1,4 +1,4 @@
-.PHONY: help install train predict smoke clean
+.PHONY: help install train predict smoke test clean
 
 DATA ?= data/sample_comments_ok_toxic.csv
 OUT ?= runs/comment_cls
@@ -28,6 +28,9 @@ predict:
 smoke:
 	poetry run python src/Trainer.py --data_csv "$(DATA)" --num_classes $(NUM_CLASSES) --epochs 1 --batch_size 16 --out_dir runs/_smoke
 	poetry run python src/Predict.py --model runs/_smoke/best.pt --tokenizer runs/_smoke/tokenizer.json --text "$(TEXT)" --labels "$(LABELS)"
+
+test:
+	poetry run pytest
 
 clean:
 	@powershell -NoProfile -Command "if (Test-Path runs) { Remove-Item -Recurse -Force runs }"
